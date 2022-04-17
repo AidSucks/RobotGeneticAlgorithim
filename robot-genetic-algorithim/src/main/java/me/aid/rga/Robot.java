@@ -7,7 +7,7 @@ public class Robot {
 	
 	private int xPos, yPos;
 	private boolean isActive = false;
-	private ArrayList<Character> genes;
+	private ArrayList<Integer[]> genes;
 	private final Board board;
 	
 	public Robot(Board board) {
@@ -37,7 +37,7 @@ public class Robot {
 		return this.board;
 	}
 	
-	public ArrayList<Character> getGenes() {
+	public ArrayList<Integer[]> getGenes() {
 		return this.genes;
 	}
 	
@@ -69,9 +69,15 @@ public class Robot {
 		Random random = new Random();
 		
 		for(int i = 0; i < 16; i++) {
-			int ranNum = random.nextInt(4) + 65;
-			char gene = (char) ranNum;
-			this.genes.add(gene);
+			
+			Integer[] temp = new Integer[5];
+			
+			for(int j = 0; j < 5; j++) {
+				int rand = random.nextInt(4);
+				temp[j] = rand;
+			}
+			
+			this.genes.add(temp);
 		}
 	}
 
@@ -126,7 +132,17 @@ public class Robot {
 	}
 	
 	public void printGenes() {
-		System.out.print(this.genes + "\n");
+		for(int x = 0; x < 16; x++) {
+			Integer[] gene = this.genes.get(x);
+			
+			System.out.print("[");
+			for(int j = 0; j < 5; j++) {
+				if(j == 4) System.out.print("-");
+				System.out.print(gene[j].intValue());
+			}
+			System.out.print("]");
+		}
+		System.out.print("\n");
 	}
 
 }

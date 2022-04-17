@@ -56,8 +56,16 @@ public class RobotTest {
 		uninitRobot.generateGenes();
 		mother.generateGenes();
 		
+		uninitRobot.printGenes();
+		mother.printGenes();
+		
 		Robot offspring1 = uninitRobot.reproduce(mother);
 		Robot offspring2 = mother.reproduce(uninitRobot);
+		
+		System.out.print("\n");
+		
+		offspring1.printGenes();
+		offspring2.printGenes();
 		
 		assertNotEquals(offspring1.getGenes(), uninitRobot.getGenes());
 		assertNotEquals(offspring1.getGenes(), mother.getGenes());
