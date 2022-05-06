@@ -5,14 +5,17 @@ import java.util.Random;
 
 public class Robot {
 	
+	private int healthPoints = 0;
 	private int xPos, yPos;
 	private boolean isActive = false;
 	private ArrayList<Integer[]> genes;
 	private final Board board;
+	private Sensor sensor;
 	
 	public Robot(Board board) {
 		this.board = board;
 		this.genes = new ArrayList<>(16);
+		this.sensor = new Sensor();
 		this.generateInitialPosition();
 		this.activate();
 	}
@@ -25,12 +28,20 @@ public class Robot {
 		this.activate();
 	}
 	
+	public int getHP() {
+		return this.healthPoints;
+	}
+	
+	public void addHP(int hp) {
+		this.healthPoints += hp;
+	}
+	
 	public int getX() {
-		return xPos;
+		return this.xPos;
 	}
 
 	public int getY() {
-		return yPos;
+		return this.yPos;
 	}
 	
 	public Board getBoard() {
@@ -41,12 +52,17 @@ public class Robot {
 		return this.genes;
 	}
 	
+	public Sensor getSensor() {
+		return this.sensor;
+	}
+	
 	public boolean isActive() {
 		return isActive;
 	}
 
 	public void activate() {
 		this.isActive = true;
+		this.healthPoints = 5;
 	}
 	
 	public void deactivate() {
@@ -64,18 +80,20 @@ public class Robot {
 	
 	//Only called for first generation
 	//TODO Move method to separate function in board
-	public void generateGenes() {
+	public void generateGenes(int numOfGenes) {
 		
 		Random random = new Random();
 		
-		for(int i = 0; i < 16; i++) {
+		for(int i = 0; i < numOfGenes; i++) {
 			
 			Integer[] temp = new Integer[5];
 			
-			for(int j = 0; j < 5; j++) {
-				int rand = random.nextInt(4);
+			for(int j = 0; j < 4; j++) {
+				int rand = random.nextInt(Sensor.State.values().length);
 				temp[j] = rand;
 			}
+			
+			temp[4] = random.nextInt(Direction.values().length);
 			
 			this.genes.add(temp);
 		}
@@ -107,18 +125,18 @@ public class Robot {
 		int yChange = this.yPos;
 		
 		switch(dir) {
-		case NORTH:
-			yChange += 1;
-			break;
-		case SOUTH:
-			yChange -= 1;
-			break;
-		case WEST:
-			xChange -= 1;
-			break;
-		case EAST:
-			xChange += 1;
-			break;
+			case NORTH:
+				yChange += 1;
+				break;
+			case SOUTH:
+				yChange -= 1;
+				break;
+			case WEST:
+				xChange -= 1;
+				break;
+			case EAST:
+				xChange += 1;
+				break;
 		}
 		
 		//Higher than size
@@ -132,6 +150,7 @@ public class Robot {
 	}
 	
 	public void printGenes() {
+		
 		for(int x = 0; x < 16; x++) {
 			Integer[] gene = this.genes.get(x);
 			
@@ -141,6 +160,7 @@ public class Robot {
 				System.out.print(gene[j].intValue());
 			}
 			System.out.print("]");
+			
 		}
 		System.out.print("\n");
 	}

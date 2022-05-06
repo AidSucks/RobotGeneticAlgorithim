@@ -32,7 +32,7 @@ public class RobotTest {
 	
 	@Test
 	public void genesAreNotEmptyAfterActivationAndGeneration() throws Exception {
-		uninitRobot.generateGenes();
+		uninitRobot.generateGenes(16);
 		assertFalse(uninitRobot.getGenes().isEmpty());
 	}
 	
@@ -44,7 +44,7 @@ public class RobotTest {
 	
 	@Test
 	public void genesArraySizeEquals16AfterActivationAndGeneration() throws Exception {
-		uninitRobot.generateGenes();
+		uninitRobot.generateGenes(16);
 		assertEquals(16, uninitRobot.getGenes().size());
 	}
 	
@@ -53,8 +53,8 @@ public class RobotTest {
 		
 		Robot mother = new Robot(this.board);
 		
-		uninitRobot.generateGenes();
-		mother.generateGenes();
+		uninitRobot.generateGenes(16);
+		mother.generateGenes(16);
 		
 		uninitRobot.printGenes();
 		mother.printGenes();
@@ -167,8 +167,8 @@ public class RobotTest {
 	public void robotShouldNotReproduceAfterDeactivation() throws Exception {
 		Robot robot2 = new Robot(this.board);
 		
-		uninitRobot.generateGenes();
-		robot2.generateGenes();
+		uninitRobot.generateGenes(16);
+		robot2.generateGenes(16);
 		
 		uninitRobot.deactivate();
 		
